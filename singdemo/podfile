@@ -1,0 +1,14 @@
+platform :ios ,'8.0'
+
+target 'singdemo'  do
+
+pod 'AFNetworking','~>3.1.0'
+
+pod 'IQKeyboardManager', '~> 6.0.4'
+
+pod 'MJRefresh', '~> 3.1.15.3'
+
+
+pod 'MBProgressHUD'
+
+end
