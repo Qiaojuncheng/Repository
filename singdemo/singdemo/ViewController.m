@@ -9,9 +9,13 @@
 #import "ViewController.h"
 #import "QJCCodeView.h"
 #import "ZLAdvertViewController.h"
+#import "QJCShoppingtabbar.h"
+#import "HBK_ShoppingCartViewController.h"
+#import "OrderDetailViewController.h"
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong , nonatomic) UITableView * tableView ;
+@property (copy , nonatomic) NSArray * dataArray;
 @end
 
 
@@ -19,11 +23,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
+   
+    _dataArray =@[@"下拉无数据显示",@"图片验证码",@"添加阴影和边框",@"picker联动",@"轮播图",@"多标签展示",@"标签导航栏",@"图片+文字Item",@"商城模块(购物车、订单、地址)",@"商城订单",@"",@"启动广告",@"引导页",@""];
+    
 //      图片验证码
-//    [self ImageCode];
 //          tableview  无数据 需要下拉一次才能显示来
-//    [self addtableview];
+    [self addtableview];
 //   启动广告
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToAd) name:@"ZLPushToAdvert" object:nil];
 }
@@ -63,7 +69,9 @@
 }
 
 - (void)loadData {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [self showHudInView:self.view hint:@"加载中..."];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self hideHud];
         [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];
     });
@@ -72,11 +80,41 @@
 #pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return _dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[UITableViewCell alloc] init];
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.textLabel.text = _dataArray[indexPath.row];
+     return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+ 
+
+    
+    
+        NSString * StrType =  _dataArray[indexPath.row];
+    
+        QJCBaseViewController * bacVc =[[QJCBaseViewController alloc]init];
+        bacVc.showType  =  StrType;
+        [self.navigationController pushViewController:bacVc animated:YES];
+    
+    
+    
+    
+//    if ([StrType isEqualToString:@"商城模块(购物车、订单、地址)"]) {
+//        QJCShoppingtabbar * bar= [[QJCShoppingtabbar alloc]init];
+//        [UIApplication sharedApplication].keyWindow.rootViewController = bar;
+////        HBK_ShoppingCartViewController  *    vc =   [[HBK_ShoppingCartViewController alloc]init];
+////        vc.isSubPage = YES;
+////        [self.navigationController pushViewController:vc animated:NO];
+//    }
+    
+
+    
 }
 
 #pragma mark - TableView 占位图

@@ -12,6 +12,8 @@
 
 @interface QJCBaseViewController : UIViewController
 
+@property (copy, nonatomic) NSString * showType; // 根据type 显示不同的内容
+
 @end
 
 

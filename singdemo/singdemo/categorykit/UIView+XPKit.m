@@ -192,15 +192,26 @@ static char kWhenTouchedUpBlockKey;
 	self.layer.masksToBounds = NO;
 }
 
-- (void)createCornerRadiusShadowWithCornerRadius:(CGFloat)cornerRadius offset:(CGSize)offset opacity:(CGFloat)opacity radius:(CGFloat)radius {
-	self.layer.shadowColor = [UIColor blackColor].CGColor;
+/**
+ 阴影
+
+ @param cornerRadius 圆角半径
+ @param color 阴影偏移量
+ @param offset 偏移位置
+ @param opacity 透明度
+ @param radius 影子半径
+ */
+- (void)createCornerRadiusShadowWithCornerRadius:(CGFloat)cornerRadius  shadowColor:(UIColor *)color offset:(CGSize)offset opacity:(CGFloat)opacity radius:(CGFloat)radius {
+         // 可以设置 默认的阴影颜色。
+         self.layer.shadowColor = color? color.CGColor:[UIColor blueColor].CGColor;
+ 
 	self.layer.shadowOpacity = opacity;
 	self.layer.shadowOffset = offset;
 	self.layer.shadowRadius = radius;
 	self.layer.shouldRasterize = YES;
 	self.layer.cornerRadius = cornerRadius;
 	self.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:[self bounds] cornerRadius:cornerRadius] CGPath];
-	self.layer.masksToBounds = NO;
+    self.layer.masksToBounds = NO;
 }
 
 // Animations

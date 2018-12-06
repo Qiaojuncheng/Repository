@@ -28,7 +28,8 @@ static const void *HttpRequestHUDKey = &HttpRequestHUDKey;
 - (void)showHudInView:(UIView *)view hint:(NSString *)hint{
     MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:view];
     HUD.label.text = hint;
-    HUD.label.textColor = TintColor;
+//  修改 加载圈的色值
+    HUD.activityIndicatorColor = [UIColor randomColor];
     [view addSubview:HUD];
     [HUD showAnimated:YES];
     [self setHUD:HUD];

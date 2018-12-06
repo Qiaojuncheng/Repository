@@ -29,10 +29,17 @@
 #define NavBarHeight 44
 //有导航控制器的时候 Tababar高度
 #define NavTabBarHeight [self.navigationController.tabBarController.tabBar frame].size.height
-//没导航控制器的时候 Tababar高度
+// Tababar高度
 #define TabBarHeight [self.tabBarController.tabBar frame].size.height
 // 状态栏高度
 #define StatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
+
+//比例 以iPhone6 为基准
+#define kRatio ScreenWidth/375
+//按比例适配
+#define kFit(num)                 kRatio * (num)
+
+
 
 
 #pragma mark     颜色
@@ -40,6 +47,8 @@
 #define MAINCOLOR [UIColor colorWithHex:0x216BB0]   // 主色
 #define MainBackColor [UIColor colorWithHex:0xf5f5f5] // 背景颜色
 #define LINECOLOR [UIColor colorWithHex:0xececec]//线条颜色
+#define RandomColor  [UIColor randomColor] // 随机色
+
 
 // 字体颜色
 #define DEEPTintColor [UIColor colorWithHex:0x333333]//字体黑色颜色
@@ -64,13 +73,15 @@
 #import "UIColor+XPKit.h"
 #import "UIView+XPKit.h"
 #import "Utile.h"
+#import "UIImageView+WebCache.h"
+
 
 #pragma mark ThirdHeaders
 #import "UIViewController+HUD.h"
 #import "IQKeyboardManager.h"
 #import "MJRefresh.h"
 #import "GuideViewController.h"
-
+#import "YYModel.h"
 #pragma mark SimpleViewHeaders
 
 #import "QJCBaseViewController.h"
@@ -80,8 +91,8 @@
 #import "ZLAdvertView.h"
 #import "ZLAdvertViewController.h"
 #import "YSLoopBanner.h"
-#import "MOFSPickerManager.h"
 
+#import "MOFSPickerManager.h"
 
 
 

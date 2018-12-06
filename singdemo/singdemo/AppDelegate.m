@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -32,7 +32,7 @@
 -(void)firstCome{
     BOOL  isFirst =  YES;
     isFirst =( BOOL )[[NSUserDefaults standardUserDefaults]  boolForKey:@"MMIsFirst"];
-    NSLog(@" ++  %d",isFirst);
+//    NSLog(@" ++  %d",isFirst);
     if (!isFirst) {
         GuideViewController * gvc =[[GuideViewController alloc]init];
         self.window.rootViewController  = gvc;
@@ -42,8 +42,8 @@
         
         // 判断登陆没登录
 //        if ([UserId length] > 0) {
-        QJCTabBarController *Tab =[[QJCTabBarController alloc]init];
-        self.window.rootViewController = Tab;
+//        QJCTabBarController *Tab =[[QJCTabBarController alloc]init];
+//        self.window.rootViewController = Tab;
 
 //        }else{
 //            QJLoginViewController *view = [QJLoginViewController new];
@@ -52,6 +52,10 @@
 //        }
         
         [self.window makeKeyAndVisible];
+        ViewController  *view = [ViewController new];
+                    UINavigationController * na= [[UINavigationController alloc]initWithRootViewController:view];
+        view.title = @"态度很重要！";
+                    self.window.rootViewController = na;
 
         [self setupAdvert];
 

@@ -84,8 +84,9 @@
     self.scrollView.frame = self.bounds;
     self.pageControl.frame = CGRectMake(0, CGRectGetMaxY(self.bounds) - 30.f, CGRectGetWidth(self.bounds), 20.f);
     
-    CGFloat imageWidth = CGRectGetWidth(self.scrollView.bounds);
-    CGFloat imageHeight = CGRectGetHeight(self.scrollView.bounds);
+    CGFloat imageWidth = self.scrollView.width;
+    CGFloat imageHeight = self.scrollView.height;
+    
     self.leftImageView.frame    = CGRectMake(imageWidth * 0, 0, imageWidth, imageHeight);
     self.middleImageView.frame  = CGRectMake(imageWidth * 1, 0, imageWidth, imageHeight);
     self.rightImageView.frame   = CGRectMake(imageWidth * 2, 0, imageWidth, imageHeight);
@@ -140,8 +141,10 @@
 - (UIImageView *)leftImageView {
     if (!_leftImageView) {
         _leftImageView = [UIImageView new];
-        _leftImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _leftImageView.contentMode = UIViewContentModeScaleAspectFill;
         //_leftImageView.backgroundColor = [UIColor yellowColor];
+        _leftImageView.clipsToBounds = YES;
+
     }
     
     return _leftImageView;
@@ -150,11 +153,13 @@
 - (UIImageView *)middleImageView {
     if (!_middleImageView) {
         _middleImageView = [UIImageView new];
-        _middleImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _middleImageView.contentMode = UIViewContentModeScaleAspectFill;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClicked:)];
         [_middleImageView addGestureRecognizer:tap];
         //_middleImageView.backgroundColor = [UIColor redColor];
         _middleImageView.userInteractionEnabled = YES;
+        _middleImageView.clipsToBounds = YES;
+
     }
     
     return _middleImageView;
@@ -163,7 +168,8 @@
 - (UIImageView *)rightImageView {
     if (!_rightImageView) {
         _rightImageView = [UIImageView new];
-        _rightImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _rightImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _rightImageView.clipsToBounds = YES;
         //_rightImageView.backgroundColor = [UIColor greenColor];
     }
     
@@ -174,6 +180,7 @@
 #pragma mark - setters
 - (void)setImageURLStrings:(NSArray *)imageURLStrings {
     if (imageURLStrings) {
+    
         _imageURLStrings = imageURLStrings;
         self.curIndex = 0;
         
@@ -203,9 +210,16 @@
         
         // TODO: if need use image from server, can import SDWebImage SDK and modify the codes below.
         // fill image
-        self.leftImageView.image = [UIImage imageNamed:self.imageURLStrings[leftIndex]];
-        self.middleImageView.image = [UIImage imageNamed:self.imageURLStrings[curIndex]];
-        self.rightImageView.image = [UIImage imageNamed:self.imageURLStrings[rightIndex]];
+//
+//        NSAssert(0, @"轮播图片不能少于 4 张");
+       
+        [self.leftImageView sd_setImageWithURL:[NSURL URLWithString:self.imageURLStrings[leftIndex]] placeholderImage:nil];
+        [self.middleImageView sd_setImageWithURL:[NSURL URLWithString:self.imageURLStrings[curIndex]] placeholderImage:nil];
+        [self.rightImageView sd_setImageWithURL:[NSURL URLWithString:self.imageURLStrings[rightIndex]] placeholderImage:nil];
+
+//        self.leftImageView.image = [UIImage imageNamed:self.imageURLStrings[leftIndex]];
+//        self.middleImageView.image = [UIImage imageNamed:self.imageURLStrings[curIndex]];
+//        self.rightImageView.image = [UIImage imageNamed:self.imageURLStrings[rightIndex]];
         
         // every scrolled, move current page to center
         [self setScrollViewContentOffsetCenter];

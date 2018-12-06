@@ -20,7 +20,7 @@
 
 CGFloat const MBProgressMaxOffset = 1000000.f;
 
-static const CGFloat MBDefaultPadding = 4.f;
+static const CGFloat MBDefaultPadding = 15.f;
 static const CGFloat MBDefaultLabelFontSize = 16.f;
 static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 
@@ -599,11 +599,24 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
         if (idx == 0) {
             // First, ensure spacing to bezel edge
             [bezelConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:bezel attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f]];
-        } else if (idx == subviews.count - 1) {
+         } else if (idx == 1) {
+            // Has previous
+            NSLayoutConstraint *padding = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:subviews[idx - 1] attribute:NSLayoutAttributeBottom multiplier:1.f constant:0.f];
+            
+            [bezelConstraints addObject:padding];
+            [paddingConstraints addObject:padding];
+            
+        }else if (idx == 2) {
+            // Has previous
+            NSLayoutConstraint *padding = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:subviews[idx - 1] attribute:NSLayoutAttributeBottom multiplier:1.f constant:0.f];
+            [bezelConstraints addObject:padding];
+            [paddingConstraints addObject:padding];
+            
+        }else if (idx == subviews.count - 1) {
             // Last, ensure spacing to bezel edge
             [bezelConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:bezel attribute:NSLayoutAttributeBottom multiplier:1.f constant:0.f]];
         }
-        if (idx > 0) {
+        if (idx > 2) {
             // Has previous
             NSLayoutConstraint *padding = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:subviews[idx - 1] attribute:NSLayoutAttributeBottom multiplier:1.f constant:0.f];
             [bezelConstraints addObject:padding];

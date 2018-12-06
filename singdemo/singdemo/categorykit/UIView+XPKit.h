@@ -134,18 +134,23 @@
                            opacity:(CGFloat)opacity
                             radius:(CGFloat)radius;
 
+
+
 /**
- *  Create a corner radius shadow on the UIView
- *
- *  @param cornerRadius Corner radius value
- *  @param offset       Shadow's offset
- *  @param opacity      Shadow's opacity
- *  @param radius       Shadow's radius
+ 
+ @param cornerRadius 圆角半径
+ @param color 阴影偏移量
+ @param offset 偏移位置
+ @param opacity 透明度
+ @param radius 影子半径
+
  */
 - (void)createCornerRadiusShadowWithCornerRadius:(CGFloat)cornerRadius
+                                     shadowColor:(UIColor *)color
                                           offset:(CGSize)offset
                                          opacity:(CGFloat)opacity
                                           radius:(CGFloat)radius;
+
 
 /**
  *  Remove the shadow around the UIView
